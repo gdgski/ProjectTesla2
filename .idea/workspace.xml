@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-<<<<<<< HEAD
-    <list default="true" id="535738d9-13ac-4be2-8781-2c6a98b34efa" name="Changes" comment="" />
-=======
     <list default="true" id="5f7e3ef8-53c6-498e-af73-1599207bcdd6" name="Changes" comment="" />
->>>>>>> 313db550d967f7a74a7f224d96d7f54bbe8c13cf
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,24 +13,6 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-<<<<<<< HEAD
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "marcocap1999"
-  }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/gdgski/ProjectTesla2.git",
-    "accountId": "e692a422-d86c-4323-8dd3-53982d060302"
-  }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 3
-}]]></component>
-  <component name="ProjectId" id="2tcLXVWfwFoSWg0BT71i1igoCzu" />
-=======
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
     &quot;state&quot;: &quot;OPEN&quot;,
@@ -51,21 +29,42 @@
   &quot;associatedIndex&quot;: 6
 }</component>
   <component name="ProjectId" id="2tcLNEEobDA0R3lkSvGzmNIjyHX" />
->>>>>>> 313db550d967f7a74a7f224d96d7f54bbe8c13cf
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-<<<<<<< HEAD
+    "Python.file_pandas.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "pandas"
-=======
-    "RunOnceActivity.ShowReadmeOnStart": "true"
->>>>>>> 313db550d967f7a74a7f224d96d7f54bbe8c13cf
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration name="file_pandas" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="ProjectTesla2" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.12 (pythonProject2)" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/file_pandas.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -76,19 +75,11 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-<<<<<<< HEAD
-      <changelist id="535738d9-13ac-4be2-8781-2c6a98b34efa" name="Changes" comment="" />
-      <created>1740646455854</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1740646455854</updated>
-=======
       <changelist id="5f7e3ef8-53c6-498e-af73-1599207bcdd6" name="Changes" comment="" />
       <created>1740646375345</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1740646375345</updated>
->>>>>>> 313db550d967f7a74a7f224d96d7f54bbe8c13cf
     </task>
     <servers />
   </component>
