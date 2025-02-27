@@ -15,7 +15,7 @@ def create_tables():
             cursor = connection.cursor()
             sql = """
                 CREATE TABLE IF NOT EXISTS dati(
-                    date YEAR PRIMARY KEY,
+                    date DATE PRIMARY KEY,
                     open FLOAT(10),
                     high FLOAT(10),
                     low FLOAT(10),
