@@ -1,4 +1,5 @@
 import csv
+from matplotlib import pyplot as plt
 from typing import final
 from xmlrpc.client import DateTime
 from pprint import pprint
@@ -37,6 +38,7 @@ df_cleaned = df_cleared.dropna().reset_index(drop=True)
 final_file = df_cleaned.head(701)
 # print(final_file)
 
+#FIRST REQUEST
 # Check if for all rows the following statements are true:
 #creation of a def to check if the statement condition is True
 def verifica(condition):
@@ -54,5 +56,24 @@ verifica(condition2)
  # The Adj Close values is less than or equal to the Close value
 condition3 = (final_file['Adj Close'] <= final_file['Close'])
 verifica(condition3)
-
 #aggiungere una riga e testare
+#su colab presentarlo in maniera più leggibile
+
+#use this command to obtain a dataframe including the mean,min ,max,standard deviation and first,second,third quartile
+print(final_file.describe())
+
+
+
+# Plotting
+plt.plot(final_file['Date'], final_file['Open'], label='Open')
+plt.plot(final_file['Date'], final_file['High'], label='High')
+plt.plot(final_file['Date'], final_file['Low'], label='Low')
+plt.plot(final_file['Date'], final_file['Close'], label='Close')
+plt.plot(final_file['Date'], final_file['Adj Close'], label='Adj Close')
+
+plt.title('TSLA Stock Prices')
+plt.xlabel('Date')
+plt.ylabel('Price')
+plt.legend()
+plt.grid(True)
+plt.show()
