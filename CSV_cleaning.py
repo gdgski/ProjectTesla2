@@ -67,3 +67,6 @@ with open('updated_data.csv','r', encoding='utf-8') as f:
         json_da_esportare.append(dizionario)
 
     pprint(json_da_esportare[:5])
+
+    #vediamo se funziona
+    # vediamo se funziona Marco
