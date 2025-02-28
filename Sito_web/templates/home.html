@@ -120,7 +120,13 @@
     <div class="container">
       <h1 class="display-4">Innovazione Elettrica per un Futuro Sostenibile</h1>
       <p class="lead">Guida il cambiamento con Tesla.</p>
-      <a href="#" class="btn btn-outline-dark btn-lg">Scopri di più</a>
+      <div class="d-flex justify-content-center">
+        <!-- Bottoni per operazioni -->
+        <a href="#" class="btn btn-outline-dark btn-lg mx-2">Inserimento dati</a>
+        <a href="#" class="btn btn-outline-dark btn-lg mx-2">Modifica dati</a>
+        <a href="{{ url_for('visualizza_dati') }}" class="btn btn-outline-dark btn-lg mx-2">Visualizzazione dati</a>
+        <a href="#" class="btn btn-outline-dark btn-lg mx-2">Eliminazione dati</a>
+      </div>
     </div>
   </section>
 
@@ -157,7 +163,7 @@
         <!-- Modello 3 -->
         <div class="col-md-4 mb-4">
           <div class="card">
-            <img src="https://www.tesla.com/sites/default/files/models-s-new/social/model-s-social.jpg" class="card-img-top"
+            <img src="https://v2charge.com/wp-content/uploads/2024/08/tesla-model-s-precio.jpg" class="card-img-top"
               alt="Tesla Model S">
             <div class="card-body">
               <h5 class="card-title">Model S</h5>
