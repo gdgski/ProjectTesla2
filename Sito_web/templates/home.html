@@ -97,12 +97,18 @@
 
     .btn-outline-dark {
       border-color: #ff003c;
-      color: white;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.3); /* Sfondo leggermente scuro e trasparente */
+  backdrop-filter: blur(5px); /* Effetto sfocato */
+  padding: 10px 20px;
+  border-radius: 10px;
+  transition: 0.3s;
     }
 
     .btn-outline-dark:hover {
-      background-color: #ff003c;
-      color: black;
+      background-color: rgba(255, 0, 60, 0.7); /* Colore rosso più visibile quando si passa sopra */
+  color: white;
+  backdrop-filter: blur(8px); /* Aumenta leggermente la sfocatura */
     }
 
   </style>
