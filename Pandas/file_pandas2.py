@@ -40,12 +40,11 @@ if __name__ == "__main__":
     fig, ax = plt.subplots()
     # ax.set_aspect(1)
     ax.plot(final_file['Date'], final_file['ADTV'], label='ADTV')
-    ax.plot(final_file['Date'], final_file['ADTV_std'], label="ADTV_std")
     ax.set_xlim([final_file['Date'].min(), final_file['Date'].max()])
     ax.set_title('TSLA Stock average statistics')
     ax.set_xlabel('Date')
     ax.set_ylabel('average')
-    
+    ax.fill_between(final_file['Date'], final_file['ADTV'] - final_file['ADTV_std'], final_file['ADTV'] + final_file['ADTV_std'], color="red", alpha=0.2, label="±1 Std Dev")
     ax.legend()
     ax.grid(True)
     plt.show()
