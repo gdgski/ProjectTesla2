@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
-<link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Julius+Sans+One&family=Press+Start+2P&family=Staatliches&display=swap" rel="stylesheet">
 
 <head>
   <meta charset="UTF-8">
@@ -24,16 +24,27 @@
     }
 
     .navbar .navbar-brand,
-    .navbar .nav-link {
+    .navbar {
       color: white !important;
+      font-family: 'Julius Sans One', sans-serif;
+    }
+
+    .nav-link {
+      color: white !important;
+      font-family: 'Julius Sans One', sans-serif;
     }
 
     .navbar .nav-link:hover {
-      color: #ff9800 !important;
+      color: #ff003c !important;
+
     }
-    h1, p {
-  font-family: 'Staatliches', sans-serif;
-}
+
+    h1 ,h2  {
+    font-family: 'Staatliches', sans-serif;
+    text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.5);
+    }
+
+
 
     .hero {
       background-image: url('https://i.pinimg.com/1200x/b5/93/ae/b593ae70d64a30e52ca35d1bdfeff4b0.jpg');
@@ -41,7 +52,8 @@
       background-position: center;
       height: 100vh;
       color: white;
-  background-attachment: fixed
+      background-attachment: fixed
+
     }
 
     .product-section {
@@ -57,6 +69,11 @@
     .card-title,
     .card-text {
       color: white;
+    }
+
+    .lead {
+    font-family: 'Staatliches', sans-serif;
+    text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.5);
     }
 
     .card-body {
@@ -75,17 +92,17 @@
     }
 
     .footer a:hover {
-      color: #fff;
+      color: white;
     }
 
     .btn-outline-dark {
-      border-color: #ff9800;
-      color: #ff9800;
+      border-color: #ff003c;
+      color: white;
     }
 
     .btn-outline-dark:hover {
-      background-color: #ff9800;
-      color: white;
+      background-color: #ff003c;
+      color: black;
     }
 
   </style>
@@ -132,10 +149,10 @@
       <p class="lead" style="color: White" >Guida il cambiamento con Tesla.</p>
       <div class="d-flex justify-content-center">
         <!-- Bottoni per operazioni -->
-        <a href="#" class="btn btn-outline-dark btn-lg mx-2">Inserimento dati</a>
-        <a href="#" class="btn btn-outline-dark btn-lg mx-2">Modifica dati</a>
-        <a href="{{ url_for('visualizza_dati') }}" class="btn btn-outline-dark btn-lg mx-2">Visualizzazione dati</a>
-        <a href="#" class="btn btn-outline-dark btn-lg mx-2">Eliminazione dati</a>
+        <a href="#" class="btn btn-outline-dark btn-lg mx-2" style="color: White" >Inserimento dati</a>
+        <a href="#" class="btn btn-outline-dark btn-lg mx-2" style="color: White">Modifica dati</a>
+        <a href="{{ url_for('visualizza_dati') }}" class="btn btn-outline-dark btn-lg mx-2" style="color: White">Visualizzazione dati</a>
+        <a href="#" class="btn btn-outline-dark btn-lg mx-2" style="color: White">Eliminazione dati</a>
       </div>
     </div>
   </section>
