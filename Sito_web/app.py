@@ -29,6 +29,11 @@ def visualizza_dati():
     connection.close()
     return render_template("visualizza_dati.html",lista_tesla = risultato)
 
+
+@app.route("/modelli")
+def modelli():
+    return render_template("modelli.html")
+
 # @app.route("/visualizza2")
 # def visualizza_dati2():
 #     # Lista di dati base in Python

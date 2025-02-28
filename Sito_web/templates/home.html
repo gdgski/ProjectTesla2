@@ -131,7 +131,7 @@
               <a class="nav-link" href="#">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Modelli</a>
+              <a class="nav-link" href="{{ url_for('modelli') }}">Tutti i modelli</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Tecnologia</a>
@@ -177,7 +177,7 @@
             <div class="card-body">
               <h5 class="card-title">Model X</h5>
               <p class="card-text">Tesla Model X è il SUV elettrico di ultima generazione, sicuro e veloce.</p>
-              <a href="#" class="btn btn-outline-dark">Scopri di più</a>
+              <a href="{{ url_for('modelli') }}" class="btn btn-outline-dark">Scopri di più</a>
             </div>
           </div>
         </div>
@@ -190,7 +190,7 @@
               <h5 class="card-title">Model 3</h5>
               <p class="card-text">Con un design elegante e prestazioni straordinarie, Model 3 è la berlina elettrica più
                 venduta al mondo.</p>
-              <a href="#" class="btn btn-outline-dark">Scopri di più</a>
+              <a href="{{ url_for('modelli') }}" class="btn btn-outline-dark">Scopri di più</a>
             </div>
           </div>
         </div>
@@ -202,7 +202,7 @@
             <div class="card-body">
               <h5 class="card-title">Model S</h5>
               <p class="card-text">Model S è il futuro delle auto elettriche, con prestazioni che sfidano ogni limite.</p>
-              <a href="#" class="btn btn-outline-dark">Scopri di più</a>
+              <a href="{{ url_for('modelli') }}" class="btn btn-outline-dark">Scopri di più</a>
             </div>
           </div>
         </div>
