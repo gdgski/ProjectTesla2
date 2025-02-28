@@ -17,7 +17,7 @@ def insert_csv_to_db(csv_file):
             cursor = connection.cursor()
 
             # Lettura del CSV e inserimento dei dati nella tabella
-            with open('updated_data.csv', 'r') as file:
+            with open('../Pandas/updated_data.csv', 'r') as file:
                 csv_reader = csv.reader(file)
 
                 # Salta la riga di intestazione (se presente)
@@ -44,4 +44,4 @@ def insert_csv_to_db(csv_file):
 
 
 # Chiamata alla funzione con il nome del CSV
-insert_csv_to_db("updated_data.csv")
+insert_csv_to_db("../Pandas/updated_data.csv")

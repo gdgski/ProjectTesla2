@@ -28,7 +28,7 @@ def create_dataframe(file_csv):
     dataframe_prices['Volume'] = dataframe_prices['Volume'].astype(float)
     df_cleaned = dataframe_prices.dropna().reset_index(drop=True)
     # Salvo il DataFrame 'df_cleaned' su un csv chiamato 'updated_data.csv'
-    df_cleaned.to_csv(path_or_buf = "updated_data.csv", index = False)
+    df_cleaned.to_csv(path_or_buf ="updated_data.csv", index = False)
     return(df_cleaned)
 
 if __name__ == "__main__":
