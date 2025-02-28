@@ -10,7 +10,7 @@ if __name__ == "__main__":
 
     #creation of a dataframe called final_file with only the first 700 rows
     final_file = create_dataframe("TSLA_modified.csv").head(701)
-    print(final_file)
+
 
 
     # Calcola l'ADTV a 5 giorni
@@ -28,5 +28,24 @@ if __name__ == "__main__":
     # Riempiamo i primi 4 valori di ADTV_std con 0 (non ci sono abbastanza dati per calcolare la deviazione standard)
     final_file['ADTV_std'].iloc[:4] = 0
 
+    # convertiamo l'ADTV_std iun interi
+    final_file['ADTV_std'] = final_file['ADTV_std'].astype(int)
+
     # Visualizza il DataFrame con le nuove colonne
-    print(final_file[['Date', 'Volume', 'ADTV', 'ADTV_std']])
+    print(final_file[["Date","Open","High","Low","Close","Adj Close","Volume",'ADTV', 'ADTV_std']])
+
+    # Plot results on a single plot and fill the area between the ADTV and its standard deviation (i.e. ADTV Std) with
+    # the fill_between() function.
+
+    fig, ax = plt.subplots()
+    # ax.set_aspect(1)
+    ax.plot(final_file['Date'], final_file['ADTV'], label='ADTV')
+    ax.plot(final_file['Date'], final_file['ADTV_std'], label="ADTV_std")
+    ax.set_xlim([final_file['Date'].min(), final_file['Date'].max()])
+    ax.set_title('TSLA Stock average statistics')
+    ax.set_xlabel('Date')
+    ax.set_ylabel('average')
+    
+    ax.legend()
+    ax.grid(True)
+    plt.show()
