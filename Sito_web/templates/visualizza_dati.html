@@ -26,10 +26,14 @@
             color: white;
 
         }
+        .card-body{
+        font-family: 'Staatliches', sans-serif;
+        }
         .table th, .table td {
             text-align: center;
         }
     </style>
+
 </head>
 <body>
     <div class="container mt-5">
@@ -52,7 +56,11 @@
                                 <th>Adj Close</th>
                                 <th>Volume</th>
                             </tr>
+
+
+
                         </thead>
+
                         <tbody>
                             {% for dato in lista_tesla %}
                             <tr>
