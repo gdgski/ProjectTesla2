@@ -27,7 +27,7 @@ def visualizza_dati():
     risultato = cursor.fetchall()
     cursor.close()
     connection.close()
-    return render_template("visualizza_dati1.html",lista_tesla = risultato)
+    return render_template("visualizza_dati.html",lista_tesla = risultato)
 
 # @app.route("/visualizza2")
 # def visualizza_dati2():
