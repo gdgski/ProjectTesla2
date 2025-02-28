@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
+<link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
 
 <head>
   <meta charset="UTF-8">
@@ -10,9 +11,13 @@
   <style>
     /* Personalizzazione tema dark */
     body {
-      background-color: #121212;
-      color: white;
+  background-image: url('https://images4.alphacoders.com/757/thumb-1920-757255.png'); /* Sostituisci con il link o il percorso dell'immagine */
+  background-size: cover; /* Adatta l'immagine a tutto lo schermo */
+  background-position: center; /* Centra l'immagine */
+  background-attachment: fixed; /* Mantiene l'immagine fissa durante lo scrolling */
+  color: white; /* Mantiene il testo in contrasto */
     }
+
 
     .navbar {
       background-color: #333;
@@ -26,13 +31,17 @@
     .navbar .nav-link:hover {
       color: #ff9800 !important;
     }
+    h1, p {
+  font-family: 'Staatliches', sans-serif;
+}
 
     .hero {
-      background-image: url('https://www.tesla.com/sites/default/files/images/social/og_2x.jpg');
+      background-image: url('https://i.pinimg.com/1200x/b5/93/ae/b593ae70d64a30e52ca35d1bdfeff4b0.jpg');
       background-size: cover;
       background-position: center;
       height: 100vh;
       color: white;
+  background-attachment: fixed
     }
 
     .product-section {
@@ -118,8 +127,9 @@
   <!-- Sezione Hero -->
   <section class="hero d-flex justify-content-center align-items-center text-center">
     <div class="container">
-      <h1 class="display-4">Innovazione Elettrica per un Futuro Sostenibile</h1>
-      <p class="lead">Guida il cambiamento con Tesla.</p>
+      <h1 class="display-4" style="color: White;">Innovazione Elettrica Per un Futuro Sostenibile</h1>
+
+      <p class="lead" style="color: White" >Guida il cambiamento con Tesla.</p>
       <div class="d-flex justify-content-center">
         <!-- Bottoni per operazioni -->
         <a href="#" class="btn btn-outline-dark btn-lg mx-2">Inserimento dati</a>
