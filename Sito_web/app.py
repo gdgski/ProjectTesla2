@@ -50,6 +50,10 @@ def grafico1():
 def grafico2():
     return render_template("grafico2.html")
 
+@app.route("/privacy")
+def privacy():
+    return render_template("privacy.html")
+
 
 
 if __name__ == "__main__":
