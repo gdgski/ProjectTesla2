@@ -5,6 +5,7 @@ from xmlrpc.client import DateTime
 from pprint import pprint
 import pandas as pd
 import numpy as np
+import os
 if __name__ == "__main__":
     from CSV_cleaning import create_dataframe
 
@@ -48,3 +49,16 @@ if __name__ == "__main__":
     ax.legend()
     ax.grid(True)
     plt.show()
+
+    # cartella_destinazione = '/Users/edoardolucca/Documents/GitHub/ProjectTesla2/Sito_web'  # Sostituisci con il percorso desiderato
+    # nome_file = 'grafico.png'
+    # percorso_completo = os.path.join('Sito_web',nome_file)
+    # 
+    # # Verifica se la cartella esiste, altrimenti la crea
+    # 
+    # 
+    # # Salva il grafico come immagine PNG nella cartella
+    # fig.savefig('/Users/edoardolucca/Documents/GitHub/ProjectTesla2/Sito_web')
+    # 
+    # # Mostra un messaggio di conferma
+    # 
