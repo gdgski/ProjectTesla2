@@ -42,6 +42,15 @@ def contatti():
 def tecnologia():
     return render_template("tecnologia.html")
 
+@app.route("/grafico1")
+def grafico1():
+    return render_template("grafico1.html")
+
+@app.route("/grafico2")
+def grafico2():
+    return render_template("grafico2.html")
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
