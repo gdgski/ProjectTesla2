@@ -1,11 +1,11 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, send_file
 import mysql
 from mysql.connector import Error
 
+
+# Webapp creation
+
 app = Flask(__name__)
-
-# sports = ["Calcio", "Basket", "Tennis", "Volley", "Atletica"]
-
 
 @app.route("/")
 def index():
@@ -41,8 +41,6 @@ def contatti():
 @app.route("/tecnologia")
 def tecnologia():
     return render_template("tecnologia.html")
-
-
 
 
 if __name__ == "__main__":
