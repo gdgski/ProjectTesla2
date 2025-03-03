@@ -41,11 +41,15 @@ if __name__ == "__main__":
 
 
     result = ADTV_DAYS(final_file, "Volume", 2)
+    result = ADTV_DAYS_std(result, "Volume", 2)
     result = ADTV_DAYS(final_file, "Volume", 5)
-    # result = ADTV_DAYS_std(result, "Volume", 10)
+    result = ADTV_DAYS_std(result, "Volume", 5)
     result = ADTV_DAYS(final_file, "Volume", 10)
+    result = ADTV_DAYS_std(result, "Volume", 10)
     result = ADTV_DAYS(final_file, "Volume", 20)
+    result = ADTV_DAYS_std(result, "Volume", 20)
     result = ADTV_DAYS(final_file, "Volume", 50)
+    result = ADTV_DAYS_std(result, "Volume", 50)
     print(result)
 
 
