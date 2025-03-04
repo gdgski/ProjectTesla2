@@ -9,13 +9,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-image: url('https://c4.wallpaperflare.com/wallpaper/772/767/583/texture-leather-wallpaper-preview.jpg'); /* Sostituisci con il link o il percorso dell'immagine */
+            background-image: url('https://c4.wallpaperflare.com/wallpaper/772/767/583/texture-leather-wallpaper-preview.jpg');
             color: white;
         }
 
         h1 {
             font-size: 60px;
-            color : #ff003c;
+            color: #ff003c;
         }
 
         h4 {
@@ -32,19 +32,30 @@
             background-color: #333;
         }
 
+        .table-container {
+            overflow-x: auto;
+        }
+
         .table {
             color: white;
+            width: 100%;
+            min-width: 1200px;
         }
 
         .table-header-custom {
             font-family: 'Staatliches', sans-serif;
-            font-size: 24px;
+            font-size: 20px;
             border-bottom: 2px solid #888;
-            color : #ff003c;
+            color: #ff003c;
         }
 
         .table th, .table td {
             text-align: center;
+        }
+
+        .table td:first-child {
+            font-size: 14px;
+            white-space: nowrap;
         }
 
         .search-bar {
@@ -73,34 +84,55 @@
                 <div class="card-header">
                     <h4>Dati Storici dei Titoli</h4>
                 </div>
-
-                <table class="table table-dark">
-                    <thead class="table-header-custom">
-                        <tr>
-                            <th>Date</th>
-                            <th>Open</th>
-                            <th>High</th>
-                            <th>Low</th>
-                            <th>Close</th>
-                            <th>Adj Close</th>
-                            <th>Volume</th>
-                        </tr>
-                    </thead>
-
-                    <tbody id="dataTableBody">
-                        {% for dato in lista_tesla %}
+                <div class="table-container">
+                    <table class="table table-dark">
+                        <thead class="table-header-custom">
                             <tr>
-                                <td>{{ dato.date }}</td>
-                                <td>{{ dato.open }}</td>
-                                <td>{{ dato.high }}</td>
-                                <td>{{ dato.low }}</td>
-                                <td>{{ dato.close }}</td>
-                                <td>{{ dato.adj_close }}</td>
-                                <td>{{ dato.volume }}</td>
+                                <th>Date</th>
+                                <th>Open</th>
+                                <th>High</th>
+                                <th>Low</th>
+                                <th>Close</th>
+                                <th>Adj Close</th>
+                                <th>Volume</th>
+                                <th>ADTV 2</th>
+                                <th>ADTV 2 Std</th>
+                                <th>ADTV 5</th>
+                                <th>ADTV 5 Std</th>
+                                <th>ADTV 10</th>
+                                <th>ADTV 10 Std</th>
+                                <th>ADTV 20</th>
+                                <th>ADTV 20 Std</th>
+                                <th>ADTV 50</th>
+                                <th>ADTV 50 Std</th>
                             </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+
+                        <tbody id="dataTableBody">
+                            {% for dato in lista_tesla %}
+                                <tr>
+                                    <td>{{ dato.date }}</td>
+                                    <td>{{ dato.open }}</td>
+                                    <td>{{ dato.high }}</td>
+                                    <td>{{ dato.low }}</td>
+                                    <td>{{ dato.close }}</td>
+                                    <td>{{ dato.adj_close }}</td>
+                                    <td>{{ dato.volume }}</td>
+                                    <td>{{ dato.ADTV_2 }}</td>
+                                    <td>{{ dato.ADTV_2_std }}</td>
+                                    <td>{{ dato.ADTV_5 }}</td>
+                                    <td>{{ dato.ADTV_5_std }}</td>
+                                    <td>{{ dato.ADTV_10 }}</td>
+                                    <td>{{ dato.ADTV_10_std }}</td>
+                                    <td>{{ dato.ADTV_20 }}</td>
+                                    <td>{{ dato.ADTV_20_std }}</td>
+                                    <td>{{ dato.ADTV_50 }}</td>
+                                    <td>{{ dato.ADTV_50_std }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         {% else %}
             <p class="text-center">Nessun dato disponibile.</p>
