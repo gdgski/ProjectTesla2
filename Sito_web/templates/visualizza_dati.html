@@ -47,6 +47,7 @@
             font-size: 20px;
             border-bottom: 2px solid #888;
             color: #ff003c;
+            cursor: pointer;
         }
 
         .table th, .table td {
@@ -70,19 +71,19 @@
             font-size: 18px;
         }
 
-        .home-button {
+        .button-container {
             display: flex;
             justify-content: center;
+            gap: 10px;
             margin-bottom: 20px;
         }
 
-        .home-button a {
+        .btn-primary {
             background-color: #ff003c;
             border-color: #ff003c;
-            color: white;
         }
 
-        .home-button a:hover {
+        .btn-primary:hover {
             background-color: #cc002f;
             border-color: #cc002f;
         }
@@ -92,8 +93,9 @@
     <div class="container mt-5">
         <h1 class="text-center">Dati Finanziari</h1>
 
-        <div class="home-button">
+        <div class="button-container">
             <a href="{{ url_for('index') }}" class="btn btn-primary">Home</a>
+            <button class="btn btn-primary" onclick="resetTable()">Reset</button>
         </div>
 
         <div class="search-bar">
@@ -106,26 +108,12 @@
                     <h4>Dati Storici dei Titoli</h4>
                 </div>
                 <div class="table-container">
-                    <table class="table table-dark">
+                    <table class="table table-dark" id="dataTable">
                         <thead class="table-header-custom">
                             <tr>
-                                <th>Date</th>
-                                <th>Open</th>
-                                <th>High</th>
-                                <th>Low</th>
-                                <th>Close</th>
-                                <th>Adj Close</th>
-                                <th>Volume</th>
-                                <th>ADTV 2</th>
-                                <th>ADTV 2 Std</th>
-                                <th>ADTV 5</th>
-                                <th>ADTV 5 Std</th>
-                                <th>ADTV 10</th>
-                                <th>ADTV 10 Std</th>
-                                <th>ADTV 20</th>
-                                <th>ADTV 20 Std</th>
-                                <th>ADTV 50</th>
-                                <th>ADTV 50 Std</th>
+                                {% for col in ['Date', 'Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume', 'ADTV 2', 'ADTV 2 Std', 'ADTV 5', 'ADTV 5 Std', 'ADTV 10', 'ADTV 10 Std', 'ADTV 20', 'ADTV 20 Std', 'ADTV 50', 'ADTV 50 Std'] %}
+                                    <th onclick="sortTable({{ loop.index0 }})">{{ col }} ▲▼</th>
+                                {% endfor %}
                             </tr>
                         </thead>
 
@@ -174,6 +162,29 @@
                     row.style.display = 'none';
                 }
             });
+        }
+
+        function sortTable(columnIndex) {
+            const table = document.querySelector("#dataTableBody");
+            const rows = Array.from(table.rows);
+            const ascending = table.getAttribute("data-sort-dir") !== "asc";
+
+            rows.sort((rowA, rowB) => {
+                const cellA = rowA.cells[columnIndex].textContent.trim();
+                const cellB = rowB.cells[columnIndex].textContent.trim();
+
+                const a = isNaN(cellA) ? cellA : parseFloat(cellA);
+                const b = isNaN(cellB) ? cellB : parseFloat(cellB);
+
+                return ascending ? (a > b ? 1 : -1) : (a < b ? 1 : -1);
+            });
+
+            rows.forEach(row => table.appendChild(row));
+            table.setAttribute("data-sort-dir", ascending ? "asc" : "desc");
+        }
+
+        function resetTable() {
+            location.reload();
         }
     </script>
 </body>
