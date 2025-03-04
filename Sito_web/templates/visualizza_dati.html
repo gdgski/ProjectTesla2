@@ -69,11 +69,32 @@
             padding: 10px;
             font-size: 18px;
         }
+
+        .home-button {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .home-button a {
+            background-color: #ff003c;
+            border-color: #ff003c;
+            color: white;
+        }
+
+        .home-button a:hover {
+            background-color: #cc002f;
+            border-color: #cc002f;
+        }
     </style>
 </head>
 <body>
     <div class="container mt-5">
         <h1 class="text-center">Dati Finanziari</h1>
+
+        <div class="home-button">
+            <a href="{{ url_for('index') }}" class="btn btn-primary">Home</a>
+        </div>
 
         <div class="search-bar">
             <input type="text" id="searchDate" class="form-control" placeholder="Cerca per data (es. 2025-03-03)" onkeyup="searchData()">
