@@ -17,7 +17,7 @@ def insert_csv_to_db(csv_file):
             cursor = connection.cursor()
 
             # Lettura del CSV e inserimento dei dati nella tabella
-            with open('../Pandas/updated_data.csv', 'r') as file:
+            with open('../Pandas/ADTV_TSLA.csv', 'r') as file:
                 csv_reader = csv.reader(file)
 
                 # Salta la riga di intestazione (se presente)
@@ -26,8 +26,8 @@ def insert_csv_to_db(csv_file):
                 for row in csv_reader:
                     # Inserisci i dati nella tabella
                     sql = """
-                        INSERT INTO dati (date, open, high, low, close, adj_close, volume)
-                        VALUES (%s, %s, %s, %s, %s, %s, %s)
+                        INSERT INTO dati (Date, Open, High, Low, Close, Adj Close, Volume, ADTV_2, ADTV_2_std, ADTV_5, ADTV_5_std, ADTV_10, ADTV_10_std, ADTV_20, ADTV_20_std, ADTV_50, ADTV_50_std)
+                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                     """
                     cursor.execute(sql, row)
 
