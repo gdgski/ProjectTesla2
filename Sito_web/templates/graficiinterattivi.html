@@ -70,6 +70,11 @@
                 <option value="ADTV_50_std">ADTV 50 Std</option>
             </select>
         </div>
+        <div class="mb-3">
+            <label for="numRows" class="form-label">Numero di righe da visualizzare:</label>
+            <input type="number" id="numRows" class="form-control" min="1" max="5000">
+        </div>
+        <button id="applyFilter" class="btn btn-primary mb-3">Filtra</button>
         <button id="resetZoom" class="btn btn-primary mb-3">Reset Zoom</button>
         <div class="chart-container">
             <canvas id="financialChart"></canvas>
@@ -77,71 +82,49 @@
     </div>
 
     <script>
-        const datiFinanziari = [
+        let datiCompleti = [
             {% for dato in lista_tesla %}
             { date: "{{ dato.date }}", open: {{ dato.open }}, high: {{ dato.high }}, low: {{ dato.low }}, close: {{ dato.close }}, volume: {{ dato.volume }}, adj_close: {{ dato.adj_close }}, ADTV_2: {{ dato.ADTV_2 }}, ADTV_2_std: {{ dato.ADTV_2_std }}, ADTV_5: {{ dato.ADTV_5 }}, ADTV_5_std: {{ dato.ADTV_5_std }}, ADTV_10: {{ dato.ADTV_10 }}, ADTV_10_std: {{ dato.ADTV_10_std }}, ADTV_20: {{ dato.ADTV_20 }}, ADTV_20_std: {{ dato.ADTV_20_std }}, ADTV_50: {{ dato.ADTV_50 }}, ADTV_50_std: {{ dato.ADTV_50_std }} },
             {% endfor %}
         ];
+        let datiFinanziari = [...datiCompleti];
 
         const colors = {
-            open: 'red',
-            high: 'blue',
-            low: 'green',
-            close: 'orange',
-            volume: 'purple',
-            adj_close: 'yellow',
-            ADTV_2: 'cyan',
-            ADTV_2_std: 'pink',
-            ADTV_5: 'brown',
-            ADTV_5_std: 'gray',
-            ADTV_10: 'lime',
-            ADTV_10_std: 'gold',
-            ADTV_20: 'teal',
-            ADTV_20_std: 'indigo',
-            ADTV_50: 'violet',
-            ADTV_50_std: 'silver'
+            open: 'red', high: 'blue', low: 'green', close: 'orange', volume: 'purple',
+            adj_close: 'yellow', ADTV_2: 'cyan', ADTV_2_std: 'pink', ADTV_5: 'brown',
+            ADTV_5_std: 'gray', ADTV_10: 'lime', ADTV_10_std: 'gold', ADTV_20: 'teal',
+            ADTV_20_std: 'indigo', ADTV_50: 'violet', ADTV_50_std: 'silver'
         };
 
         const ctx = document.getElementById('financialChart').getContext('2d');
-        const labels = datiFinanziari.map(d => d.date);
-
         let chart = new Chart(ctx, {
             type: 'line',
-            data: {
-                labels: labels,
-                datasets: []
-            },
+            data: { labels: datiFinanziari.map(d => d.date), datasets: [] },
             options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    x: { title: { display: true, text: 'Data' } },
-                    y: { title: { display: true, text: 'Valore' } }
-                },
-                plugins: {
-                    zoom: {
-                        pan: { enabled: true, mode: 'x' },
-                        zoom: { wheel: { enabled: true }, pinch: { enabled: true }, mode: 'x' }
-                    }
-                }
+                responsive: true, maintainAspectRatio: false,
+                scales: { x: { title: { display: true, text: 'Data' } }, y: { title: { display: true, text: 'Valore' } } },
+                plugins: { zoom: { pan: { enabled: true, mode: 'x' }, zoom: { wheel: { enabled: true }, pinch: { enabled: true }, mode: 'x' } } }
             }
         });
 
         function updateChart() {
             const selectedFields = Array.from(document.getElementById('selectFields').selectedOptions).map(opt => opt.value);
+            chart.data.labels = datiFinanziari.map(d => d.date);
             chart.data.datasets = selectedFields.map(field => ({
                 label: field.charAt(0).toUpperCase() + field.slice(1).replace('_', ' '),
                 data: datiFinanziari.map(d => d[field]),
-                borderColor: colors[field],
-                borderWidth: 2,
-                fill: false,
-                pointRadius: 0
+                borderColor: colors[field], borderWidth: 2, fill: false, pointRadius: 0
             }));
             chart.update();
         }
 
         document.getElementById('selectFields').addEventListener('change', updateChart);
         document.getElementById('resetZoom').addEventListener('click', () => chart.resetZoom());
+        document.getElementById('applyFilter').addEventListener('click', () => {
+            const numRows = parseInt(document.getElementById('numRows').value, 10);
+            datiFinanziari = datiCompleti.slice(0, numRows);
+            updateChart();
+        });
 
         updateChart();
     </script>
