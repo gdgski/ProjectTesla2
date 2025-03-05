@@ -1,47 +1,39 @@
 <!DOCTYPE html>
 <html lang="it">
-<link href="https://fonts.googleapis.com/css2?family=Julius+Sans+One&family=Press+Start+2P&family=Staatliches&display=swap" rel="stylesheet">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dati Finanziari</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Julius+Sans+One&family=Press+Start+2P&family=Staatliches&display=swap" rel="stylesheet">
     <style>
         body {
             background-image: url('https://c4.wallpaperflare.com/wallpaper/772/767/583/texture-leather-wallpaper-preview.jpg');
             color: white;
         }
-
         h1 {
             font-size: 60px;
             color: #ff003c;
         }
-
         h4 {
             font-family: 'Staatliches', sans-serif;
             text-align: center;
             font-size: 28px;
         }
-
         .text-center {
             font-family: 'Staatliches', sans-serif;
         }
-
         .card-header {
             background-color: #333;
         }
-
         .table-container {
             overflow-x: auto;
         }
-
         .table {
             color: white;
             width: 100%;
             min-width: 1200px;
         }
-
         .table-header-custom {
             font-family: 'Staatliches', sans-serif;
             font-size: 20px;
@@ -49,59 +41,59 @@
             color: #ff003c;
             cursor: pointer;
         }
-
         .table th, .table td {
             text-align: center;
         }
-
         .table td:first-child {
             font-size: 14px;
             white-space: nowrap;
         }
-
         .search-bar {
             margin-bottom: 20px;
             display: flex;
             justify-content: center;
         }
-
         .search-bar input {
             width: 50%;
             padding: 10px;
             font-size: 18px;
         }
-
         .button-container {
             display: flex;
             justify-content: center;
-            gap: 10px;
             margin-bottom: 20px;
         }
-
+        .reset-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
         .btn-primary {
             background-color: #ff003c;
             border-color: #ff003c;
         }
-
         .btn-primary:hover {
             background-color: #cc002f;
             border-color: #cc002f;
+        }
+        .sort-indicator {
+            font-size: 14px;
+            margin-left: 5px;
         }
     </style>
 </head>
 <body>
     <div class="container mt-5">
         <h1 class="text-center">Dati Finanziari</h1>
-
         <div class="button-container">
             <a href="{{ url_for('index') }}" class="btn btn-primary">Home</a>
+        </div>
+        <div class="search-bar">
+            <input type="text" id="searchDate" class="form-control" placeholder="Cerca per data (es. 2025-03-03)" onkeyup="debouncedSearch()">
+        </div>
+        <div class="reset-container">
             <button class="btn btn-primary" onclick="resetTable()">Reset</button>
         </div>
-
-        <div class="search-bar">
-            <input type="text" id="searchDate" class="form-control" placeholder="Cerca per data (es. 2025-03-03)" onkeyup="searchData()">
-        </div>
-
         {% if lista_tesla %}
             <div class="card mt-4">
                 <div class="card-header">
@@ -112,31 +104,32 @@
                         <thead class="table-header-custom">
                             <tr>
                                 {% for col in ['Date', 'Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume', 'ADTV 2', 'ADTV 2 Std', 'ADTV 5', 'ADTV 5 Std', 'ADTV 10', 'ADTV 10 Std', 'ADTV 20', 'ADTV 20 Std', 'ADTV 50', 'ADTV 50 Std'] %}
-                                    <th onclick="sortTable({{ loop.index0 }})">{{ col }} ▲▼</th>
+                                    <th onclick="sortTable({{ loop.index0 }}, this)">
+                                        {{ col }} <span class="sort-indicator"></span>
+                                    </th>
                                 {% endfor %}
                             </tr>
                         </thead>
-
                         <tbody id="dataTableBody">
                             {% for dato in lista_tesla %}
                                 <tr>
-                                    <td>{{ dato.date }}</td>
-                                    <td>{{ dato.open }}</td>
-                                    <td>{{ dato.high }}</td>
-                                    <td>{{ dato.low }}</td>
-                                    <td>{{ dato.close }}</td>
-                                    <td>{{ dato.adj_close }}</td>
-                                    <td>{{ dato.volume }}</td>
-                                    <td>{{ dato.ADTV_2 }}</td>
-                                    <td>{{ dato.ADTV_2_std }}</td>
-                                    <td>{{ dato.ADTV_5 }}</td>
-                                    <td>{{ dato.ADTV_5_std }}</td>
-                                    <td>{{ dato.ADTV_10 }}</td>
-                                    <td>{{ dato.ADTV_10_std }}</td>
-                                    <td>{{ dato.ADTV_20 }}</td>
-                                    <td>{{ dato.ADTV_20_std }}</td>
-                                    <td>{{ dato.ADTV_50 }}</td>
-                                    <td>{{ dato.ADTV_50_std }}</td>
+                                    <td>{{ dato.date or '-' }}</td>
+                                    <td>{{ dato.open or '-' }}</td>
+                                    <td>{{ dato.high or '-' }}</td>
+                                    <td>{{ dato.low or '-' }}</td>
+                                    <td>{{ dato.close or '-' }}</td>
+                                    <td>{{ dato.adj_close or '-' }}</td>
+                                    <td>{{ dato.volume or '-' }}</td>
+                                    <td>{{ dato.ADTV_2 or '-' }}</td>
+                                    <td>{{ dato.ADTV_2_std or '-' }}</td>
+                                    <td>{{ dato.ADTV_5 or '-' }}</td>
+                                    <td>{{ dato.ADTV_5_std or '-' }}</td>
+                                    <td>{{ dato.ADTV_10 or '-' }}</td>
+                                    <td>{{ dato.ADTV_10_std or '-' }}</td>
+                                    <td>{{ dato.ADTV_20 or '-' }}</td>
+                                    <td>{{ dato.ADTV_20_std or '-' }}</td>
+                                    <td>{{ dato.ADTV_50 or '-' }}</td>
+                                    <td>{{ dato.ADTV_50_std or '-' }}</td>
                                 </tr>
                             {% endfor %}
                         </tbody>
@@ -147,42 +140,34 @@
             <p class="text-center">Nessun dato disponibile.</p>
         {% endif %}
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        let searchTimeout;
+        function debouncedSearch() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(searchData, 300);
+        }
         function searchData() {
-            const input = document.getElementById('searchDate').value.toLowerCase();
-            const rows = document.querySelectorAll('#dataTableBody tr');
-
-            rows.forEach(row => {
-                const dateCell = row.cells[0].textContent.toLowerCase();
-                if (dateCell.includes(input)) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
+            requestAnimationFrame(() => {
+                const input = document.getElementById('searchDate').value.toLowerCase();
+                document.querySelectorAll('#dataTableBody tr').forEach(row => {
+                    row.style.display = row.cells[0].textContent.toLowerCase().includes(input) ? '' : 'none';
+                });
             });
         }
-
-        function sortTable(columnIndex) {
-            const table = document.querySelector("#dataTableBody");
-            const rows = Array.from(table.rows);
-            const ascending = table.getAttribute("data-sort-dir") !== "asc";
-
+        function sortTable(columnIndex, thElement) {
+            const tableBody = document.querySelector("#dataTableBody");
+            const rows = Array.from(tableBody.rows);
+            const ascending = thElement.getAttribute("data-sort-dir") !== "asc";
             rows.sort((rowA, rowB) => {
-                const cellA = rowA.cells[columnIndex].textContent.trim();
-                const cellB = rowB.cells[columnIndex].textContent.trim();
-
-                const a = isNaN(cellA) ? cellA : parseFloat(cellA);
-                const b = isNaN(cellB) ? cellB : parseFloat(cellB);
-
-                return ascending ? (a > b ? 1 : -1) : (a < b ? 1 : -1);
+                const valA = rowA.cells[columnIndex].textContent.trim();
+                const valB = rowB.cells[columnIndex].textContent.trim();
+                return ascending ? (valA > valB ? 1 : -1) : (valA < valB ? 1 : -1);
             });
-
-            rows.forEach(row => table.appendChild(row));
-            table.setAttribute("data-sort-dir", ascending ? "asc" : "desc");
+            rows.forEach(row => tableBody.appendChild(row));
+            document.querySelectorAll('.sort-indicator').forEach(ind => ind.textContent = '');
+            thElement.querySelector('.sort-indicator').textContent = ascending ? '▲' : '▼';
+            thElement.setAttribute("data-sort-dir", ascending ? "asc" : "desc");
         }
-
         function resetTable() {
             location.reload();
         }
