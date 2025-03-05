@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inserisci Dati Finanziari</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Julius+Sans+One&family=Press+Start+2P&family=Staatliches&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('https://c4.wallpaperflare.com/wallpaper/772/767/583/texture-leather-wallpaper-preview.jpg');
+            color: white;
+            font-family: 'Staatliches', sans-serif;
+        }
+        h1 {
+            font-size: 50px;
+            color: #ff003c;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-container {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 800px;
+            margin: auto;
+        }
+        .btn-primary {
+            background-color: #ff003c;
+            border-color: #ff003c;
+        }
+        .btn-primary:hover {
+            background-color: #cc002f;
+            border-color: #cc002f;
+        }
+        label {
+            font-size: 20px;
+            color: #ff003c;
+        }
+        input {
+            font-size: 18px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Inserisci Dati Finanziari</h1>
+        <div class="form-container">
+            <form action="{{ url_for('inserisci_dati') }}" method="POST">
+                <div class="mb-3">
+                    <label for="date" class="form-label">Data</label>
+                    <input type="date" class="form-control" id="date" name="date" required>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="open" class="form-label">Open</label>
+                        <input type="number" step="0.01" class="form-control" id="open" name="open" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="high" class="form-label">High</label>
+                        <input type="number" step="0.01" class="form-control" id="high" name="high" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="low" class="form-label">Low</label>
+                        <input type="number" step="0.01" class="form-control" id="low" name="low" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="close" class="form-label">Close</label>
+                        <input type="number" step="0.01" class="form-control" id="close" name="close" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="adj_close" class="form-label">Adj Close</label>
+                    <input type="number" step="0.01" class="form-control" id="adj_close" name="adj_close" required>
+                </div>
+                <div class="mb-3">
+                    <label for="volume" class="form-label">Volume</label>
+                    <input type="number" class="form-control" id="volume" name="volume" required>
+                </div>
+
+                <!-- Campi ADTV -->
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="ADTV_2" class="form-label">ADTV 2</label>
+                        <input type="number" step="0.01" class="form-control" id="ADTV_2" name="ADTV_2">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="ADTV_2_std" class="form-label">ADTV 2 Std</label>
+                        <input type="number" step="0.01" class="form-control" id="ADTV_2_std" name="ADTV_2_std">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="ADTV_5" class="form-label">ADTV 5</label>
+                        <input type="number" step="0.01" class="form-control" id="ADTV_5" name="ADTV_5">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="ADTV_5_std" class="form-label">ADTV 5 Std</label>
+                        <input type="number" step="0.01" class="form-control" id="ADTV_5_std" name="ADTV_5_std">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="ADTV_10" class="form-label">ADTV 10</label>
+                        <input type="number" step="0.01" class="form-control" id="ADTV_10" name="ADTV_10">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="ADTV_10_std" class="form-label">ADTV 10 Std</label>
+                        <input type="number" step="0.01" class="form-control" id="ADTV_10_std" name="ADTV_10_std">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="ADTV_20" class="form-label">ADTV 20</label>
+                        <input type="number" step="0.01" class="form-control" id="ADTV_20" name="ADTV_20">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="ADTV_20_std" class="form-label">ADTV 20 Std</label>
+                        <input type="number" step="0.01" class="form-control" id="ADTV_20_std" name="ADTV_20_std">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="ADTV_50" class="form-label">ADTV 50</label>
+                        <input type="number" step="0.01" class="form-control" id="ADTV_50" name="ADTV_50">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="ADTV_50_std" class="form-label">ADTV 50 Std</label>
+                        <input type="number" step="0.01" class="form-control" id="ADTV_50_std" name="ADTV_50_std">
+                    </div>
+                </div>
+
+                <div class="button-container mt-4">
+                    <a href="{{ url_for('index') }}" class="btn btn-primary">Home</a>
+                    <button type="submit" class="btn btn-primary">Salva Dati</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

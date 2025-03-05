@@ -54,6 +54,10 @@ def grafico2():
 def privacy():
     return render_template("privacy.html")
 
+@app.route("/inserisci_dati")
+def inserisci_dati():
+    return render_template("inserisci_dati.html")
+
 @app.route("/graficiinterattivi")
 def graficiinterattivi():
     connection = mysql.connector.connect(

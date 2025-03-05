@@ -5,18 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grafici Finanziari</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Julius+Sans+One&family=Press+Start+2P&family=Staatliches&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
     <style>
+        body {
+            background-image: url('https://c4.wallpaperflare.com/wallpaper/772/767/583/texture-leather-wallpaper-preview.jpg');
+            color: white;
+            font-family: 'Staatliches', sans-serif;
+        }
+        h1 {
+            font-size: 50px;
+            color: #ff003c;
+            text-align: center;
+            margin-bottom: 30px;
+        }
         .chart-container {
             width: 100%;
+            max-width: 100%;
             height: 70vh;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .form-label {
+            color: #ff003c;
+            font-size: 20px;
+        }
+        .btn-primary {
+            background-color: #ff003c;
+            border-color: #ff003c;
+            font-size: 18px;
+        }
+        .btn-primary:hover {
+            background-color: #cc002f;
+            border-color: #cc002f;
+        }
+        canvas {
+            width: 100% !important;
         }
     </style>
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="text-center">Grafici Finanziari</h1>
+        <h1>Grafici Finanziari</h1>
         <div class="mb-3">
             <label for="selectFields" class="form-label">Seleziona i campi da visualizzare:</label>
             <select id="selectFields" class="form-select" multiple>
@@ -25,6 +57,17 @@
                 <option value="low">Low</option>
                 <option value="close">Close</option>
                 <option value="volume">Volume</option>
+                <option value="adj_close">Adj Close</option>
+                <option value="ADTV_2">ADTV 2</option>
+                <option value="ADTV_2_std">ADTV 2 Std</option>
+                <option value="ADTV_5">ADTV 5</option>
+                <option value="ADTV_5_std">ADTV 5 Std</option>
+                <option value="ADTV_10">ADTV 10</option>
+                <option value="ADTV_10_std">ADTV 10 Std</option>
+                <option value="ADTV_20">ADTV 20</option>
+                <option value="ADTV_20_std">ADTV 20 Std</option>
+                <option value="ADTV_50">ADTV 50</option>
+                <option value="ADTV_50_std">ADTV 50 Std</option>
             </select>
         </div>
         <button id="resetZoom" class="btn btn-primary mb-3">Reset Zoom</button>
@@ -36,7 +79,7 @@
     <script>
         const datiFinanziari = [
             {% for dato in lista_tesla %}
-            { date: "{{ dato.date }}", open: {{ dato.open }}, high: {{ dato.high }}, low: {{ dato.low }}, close: {{ dato.close }}, volume: {{ dato.volume }} },
+            { date: "{{ dato.date }}", open: {{ dato.open }}, high: {{ dato.high }}, low: {{ dato.low }}, close: {{ dato.close }}, volume: {{ dato.volume }}, adj_close: {{ dato.adj_close }}, ADTV_2: {{ dato.ADTV_2 }}, ADTV_2_std: {{ dato.ADTV_2_std }}, ADTV_5: {{ dato.ADTV_5 }}, ADTV_5_std: {{ dato.ADTV_5_std }}, ADTV_10: {{ dato.ADTV_10 }}, ADTV_10_std: {{ dato.ADTV_10_std }}, ADTV_20: {{ dato.ADTV_20 }}, ADTV_20_std: {{ dato.ADTV_20_std }}, ADTV_50: {{ dato.ADTV_50 }}, ADTV_50_std: {{ dato.ADTV_50_std }} },
             {% endfor %}
         ];
 
@@ -45,7 +88,18 @@
             high: 'blue',
             low: 'green',
             close: 'orange',
-            volume: 'purple'
+            volume: 'purple',
+            adj_close: 'yellow',
+            ADTV_2: 'cyan',
+            ADTV_2_std: 'pink',
+            ADTV_5: 'brown',
+            ADTV_5_std: 'gray',
+            ADTV_10: 'lime',
+            ADTV_10_std: 'gold',
+            ADTV_20: 'teal',
+            ADTV_20_std: 'indigo',
+            ADTV_50: 'violet',
+            ADTV_50_std: 'silver'
         };
 
         const ctx = document.getElementById('financialChart').getContext('2d');
@@ -55,17 +109,11 @@
             type: 'line',
             data: {
                 labels: labels,
-                datasets: [{
-                    label: 'Open',
-                    data: datiFinanziari.map(d => d.open),
-                    borderColor: colors.open,
-                    borderWidth: 2,
-                    fill: false,
-                    pointRadius: 0
-                }]
+                datasets: []
             },
             options: {
                 responsive: true,
+                maintainAspectRatio: false,
                 scales: {
                     x: { title: { display: true, text: 'Data' } },
                     y: { title: { display: true, text: 'Valore' } }
@@ -81,44 +129,21 @@
 
         function updateChart() {
             const selectedFields = Array.from(document.getElementById('selectFields').selectedOptions).map(opt => opt.value);
-
-            chart.data.datasets = selectedFields.map((field, index) => ({
-                label: field.charAt(0).toUpperCase() + field.slice(1),
+            chart.data.datasets = selectedFields.map(field => ({
+                label: field.charAt(0).toUpperCase() + field.slice(1).replace('_', ' '),
                 data: datiFinanziari.map(d => d[field]),
                 borderColor: colors[field],
                 borderWidth: 2,
                 fill: false,
                 pointRadius: 0
             }));
-
-            if (selectedFields.length === 2) {
-                const field1 = selectedFields[0];
-                const field2 = selectedFields[1];
-
-                const data1 = datiFinanziari.map(d => d[field1]);
-                const data2 = datiFinanziari.map(d => d[field2]);
-
-                const backgroundColors = data1.map((val, i) => val >= data2[i] ? "rgba(0, 255, 0, 0.2)" : "rgba(255, 0, 0, 0.2)");
-
-                chart.data.datasets.push({
-                    label: `${field1} - ${field2} Area`,
-                    data: data1,
-                    borderColor: 'transparent',
-                    backgroundColor: backgroundColors,
-                    fill: {
-                        target: "-1",
-                        above: (ctx) => backgroundColors[ctx.index],
-                        below: (ctx) => backgroundColors[ctx.index]
-                    },
-                    pointRadius: 0
-                });
-            }
-
             chart.update();
         }
 
         document.getElementById('selectFields').addEventListener('change', updateChart);
         document.getElementById('resetZoom').addEventListener('click', () => chart.resetZoom());
+
+        updateChart();
     </script>
 </body>
 </html>
