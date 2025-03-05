@@ -1,11 +1,34 @@
-from flask import Flask, render_template, send_file
+from flask import Flask, render_template, send_file , request, flash, redirect, url_for
 import mysql
+from joblib.parallel import method
 from mysql.connector import Error
+def esegui_query_parametrizzata(query, parametri):
+    try:
+        # Creazione connessione
+        connection = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database="ProjectTesla"
+        )
+        if connection.is_connected():
+            cursor = connection.cursor()
+            cursor.execute(query, parametri)
+            connection.commit()
+            cursor.close()
+            print(f"Query eseguita con successo: {query}")
+    except Error as e:
+        print(f"Errore durante l'esecuzione della query: {e}")
+        return None
+    finally:
+        if connection.is_connected():
+            connection.close()
 
 
 # Webapp creation
 
 app = Flask(__name__)
+app.secret_key = 'chiave_segreta_per_flash' # Necessaria per usare flash
 
 @app.route("/")
 def index():
@@ -57,6 +80,41 @@ def privacy():
 @app.route("/inserisci_dati")
 def inserisci_dati():
     return render_template("inserisci_dati.html")
+
+@app.route("/inserisci_nuovi_dati",methods=['POST'])
+def inserisci_nuovi_dati():
+
+    date = request.form.get('date')
+    high = request.form.get('high')
+    open = request.form.get('open')
+    volume = request.form.get('volume')
+    adj_close = request.form.get('adj close')
+    close = request.form.get('close')
+    low = request.form.get('low')
+
+    connection = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="",
+        database="ProjectTesla"
+    )
+    cursor = connection.cursor(dictionary=True)
+
+    q = """INSERT INTO dati (date,open,high,low,close,adj_close,volume) Values (%s,%s,%s,%s,%s,%s,%s)"""
+
+    esegui_query_parametrizzata(q,date,open,high,low,close,adj_close,volume)
+    
+    cursor.execute(q)
+    risultato = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return render_template("visualizza_dati.html", lista_tesla=risultato)
+    flash("Dati inseriti con successo")
+
+
+
+    return redirect(url_for("inserisci_dati"))
+
 
 @app.route("/graficiinterattivi")
 def graficiinterattivi():

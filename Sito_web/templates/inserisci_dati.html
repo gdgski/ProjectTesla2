@@ -47,93 +47,48 @@
     </style>
 </head>
 <body>
+    {% with messaggi = get_flashed_messages() %}
+        {% if messaggi %}
+          <script>
+            alert("{{ messaggi[0] }}");
+          </script>
+        {% endif %}
+      {% endwith %}
     <div class="container mt-5">
         <h1>Inserisci Dati Finanziari</h1>
         <div class="form-container">
-            <form action="{{ url_for('inserisci_dati') }}" method="POST">
+            <form action="{{ url_for('inserisci_nuovi_dati') }}" method="POST">
                 <div class="mb-3">
                     <label for="date" class="form-label">Data</label>
-                    <input type="date" class="form-control" id="date" name="date" required>
+                    <input type="date" class="form-control" id="date" name="date" >
                 </div>
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="open" class="form-label">Open</label>
-                        <input type="number" step="0.01" class="form-control" id="open" name="open" required>
+                        <input type="number" step="0.01" class="form-control" id="open" name="open" >
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="high" class="form-label">High</label>
-                        <input type="number" step="0.01" class="form-control" id="high" name="high" required>
+                        <input type="number" step="0.01" class="form-control" id="high" name="high" >
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="low" class="form-label">Low</label>
-                        <input type="number" step="0.01" class="form-control" id="low" name="low" required>
+                        <input type="number" step="0.01" class="form-control" id="low" name="low" >
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="close" class="form-label">Close</label>
-                        <input type="number" step="0.01" class="form-control" id="close" name="close" required>
+                        <input type="number" step="0.01" class="form-control" id="close" name="close" >
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="adj_close" class="form-label">Adj Close</label>
-                    <input type="number" step="0.01" class="form-control" id="adj_close" name="adj_close" required>
+                    <input type="number" step="0.01" class="form-control" id="adj_close" name="adj_close" >
                 </div>
                 <div class="mb-3">
                     <label for="volume" class="form-label">Volume</label>
-                    <input type="number" class="form-control" id="volume" name="volume" required>
-                </div>
-
-                <!-- Campi ADTV -->
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="ADTV_2" class="form-label">ADTV 2</label>
-                        <input type="number" step="0.01" class="form-control" id="ADTV_2" name="ADTV_2">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="ADTV_2_std" class="form-label">ADTV 2 Std</label>
-                        <input type="number" step="0.01" class="form-control" id="ADTV_2_std" name="ADTV_2_std">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="ADTV_5" class="form-label">ADTV 5</label>
-                        <input type="number" step="0.01" class="form-control" id="ADTV_5" name="ADTV_5">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="ADTV_5_std" class="form-label">ADTV 5 Std</label>
-                        <input type="number" step="0.01" class="form-control" id="ADTV_5_std" name="ADTV_5_std">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="ADTV_10" class="form-label">ADTV 10</label>
-                        <input type="number" step="0.01" class="form-control" id="ADTV_10" name="ADTV_10">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="ADTV_10_std" class="form-label">ADTV 10 Std</label>
-                        <input type="number" step="0.01" class="form-control" id="ADTV_10_std" name="ADTV_10_std">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="ADTV_20" class="form-label">ADTV 20</label>
-                        <input type="number" step="0.01" class="form-control" id="ADTV_20" name="ADTV_20">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="ADTV_20_std" class="form-label">ADTV 20 Std</label>
-                        <input type="number" step="0.01" class="form-control" id="ADTV_20_std" name="ADTV_20_std">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="ADTV_50" class="form-label">ADTV 50</label>
-                        <input type="number" step="0.01" class="form-control" id="ADTV_50" name="ADTV_50">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="ADTV_50_std" class="form-label">ADTV 50 Std</label>
-                        <input type="number" step="0.01" class="form-control" id="ADTV_50_std" name="ADTV_50_std">
-                    </div>
+                    <input type="number" class="form-control" id="volume" name="volume" >
                 </div>
 
                 <div class="button-container mt-4">
