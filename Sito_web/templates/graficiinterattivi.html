@@ -75,6 +75,7 @@
             <input type="number" id="numRows" class="form-control" min="1" max="5000">
         </div>
         <button id="applyFilter" class="btn btn-primary mb-3">Filtra</button>
+        <button id="resetFilters" class="btn btn-secondary mb-3">Azzera Filtri</button>
         <button id="resetZoom" class="btn btn-primary mb-3">Reset Zoom</button>
         <div class="chart-container">
             <canvas id="financialChart"></canvas>
@@ -82,6 +83,17 @@
     </div>
 
     <script>
+        document.getElementById('resetFilters').addEventListener('click', () => {
+        // Resetta i campi selezionati
+        document.getElementById('selectFields').selectedIndex = -1;
+
+        // Resetta il numero di righe
+        document.getElementById('numRows').value = '';
+
+        // Ripristina i dati originali
+        datiFinanziari = [...datiCompleti];
+        updateChart();
+    });
         let datiCompleti = [
             {% for dato in lista_tesla %}
             { date: "{{ dato.date }}", open: {{ dato.open }}, high: {{ dato.high }}, low: {{ dato.low }}, close: {{ dato.close }}, volume: {{ dato.volume }}, adj_close: {{ dato.adj_close }}, ADTV_2: {{ dato.ADTV_2 }}, ADTV_2_std: {{ dato.ADTV_2_std }}, ADTV_5: {{ dato.ADTV_5 }}, ADTV_5_std: {{ dato.ADTV_5_std }}, ADTV_10: {{ dato.ADTV_10 }}, ADTV_10_std: {{ dato.ADTV_10_std }}, ADTV_20: {{ dato.ADTV_20 }}, ADTV_20_std: {{ dato.ADTV_20_std }}, ADTV_50: {{ dato.ADTV_50 }}, ADTV_50_std: {{ dato.ADTV_50_std }} },
@@ -128,5 +140,6 @@
 
         updateChart();
     </script>
+
 </body>
 </html>
