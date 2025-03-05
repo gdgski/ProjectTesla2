@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grafici Finanziari</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
+    <style>
+        .chart-container {
+            width: 100%;
+            height: 70vh;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Grafici Finanziari</h1>
+        <div class="mb-3">
+            <label for="selectFields" class="form-label">Seleziona i campi da visualizzare:</label>
+            <select id="selectFields" class="form-select" multiple>
+                <option value="open" selected>Open</option>
+                <option value="high">High</option>
+                <option value="low">Low</option>
+                <option value="close">Close</option>
+                <option value="volume">Volume</option>
+            </select>
+        </div>
+        <button id="resetZoom" class="btn btn-primary mb-3">Reset Zoom</button>
+        <div class="chart-container">
+            <canvas id="financialChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        const datiFinanziari = [
+            {% for dato in lista_tesla %}
+            { date: "{{ dato.date }}", open: {{ dato.open }}, high: {{ dato.high }}, low: {{ dato.low }}, close: {{ dato.close }}, volume: {{ dato.volume }} },
+            {% endfor %}
+        ];
+
+        const colors = {
+            open: 'red',
+            high: 'blue',
+            low: 'green',
+            close: 'orange',
+            volume: 'purple'
+        };
+
+        const ctx = document.getElementById('financialChart').getContext('2d');
+        const labels = datiFinanziari.map(d => d.date);
+
+        let chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Open',
+                    data: datiFinanziari.map(d => d.open),
+                    borderColor: colors.open,
+                    borderWidth: 2,
+                    fill: false,
+                    pointRadius: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: { title: { display: true, text: 'Data' } },
+                    y: { title: { display: true, text: 'Valore' } }
+                },
+                plugins: {
+                    zoom: {
+                        pan: { enabled: true, mode: 'x' },
+                        zoom: { wheel: { enabled: true }, pinch: { enabled: true }, mode: 'x' }
+                    }
+                }
+            }
+        });
+
+        function updateChart() {
+            const selectedFields = Array.from(document.getElementById('selectFields').selectedOptions).map(opt => opt.value);
+
+            chart.data.datasets = selectedFields.map((field, index) => ({
+                label: field.charAt(0).toUpperCase() + field.slice(1),
+                data: datiFinanziari.map(d => d[field]),
+                borderColor: colors[field],
+                borderWidth: 2,
+                fill: false,
+                pointRadius: 0
+            }));
+
+            if (selectedFields.length === 2) {
+                const field1 = selectedFields[0];
+                const field2 = selectedFields[1];
+
+                const data1 = datiFinanziari.map(d => d[field1]);
+                const data2 = datiFinanziari.map(d => d[field2]);
+
+                const backgroundColors = data1.map((val, i) => val >= data2[i] ? "rgba(0, 255, 0, 0.2)" : "rgba(255, 0, 0, 0.2)");
+
+                chart.data.datasets.push({
+                    label: `${field1} - ${field2} Area`,
+                    data: data1,
+                    borderColor: 'transparent',
+                    backgroundColor: backgroundColors,
+                    fill: {
+                        target: "-1",
+                        above: (ctx) => backgroundColors[ctx.index],
+                        below: (ctx) => backgroundColors[ctx.index]
+                    },
+                    pointRadius: 0
+                });
+            }
+
+            chart.update();
+        }
+
+        document.getElementById('selectFields').addEventListener('change', updateChart);
+        document.getElementById('resetZoom').addEventListener('click', () => chart.resetZoom());
+    </script>
+</body>
+</html>

@@ -54,6 +54,25 @@ def grafico2():
 def privacy():
     return render_template("privacy.html")
 
+@app.route("/graficiinterattivi")
+def graficiinterattivi():
+    connection = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="",
+        database="ProjectTesla"
+    )
+    cursor = connection.cursor(dictionary=True)
+
+    q = """SELECT * From dati"""
+
+    cursor.execute(q)
+    risultato = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return render_template("graficiinterattivi.html", lista_tesla=risultato)
+
+
 
 
 if __name__ == "__main__":
