@@ -46,3 +46,17 @@ result_finale = (final_file[["Date","Open","High","Low","Close","Adj Close","Vol
 print(result_finale)
 # Save the DataFrame in a CSV file
 result_finale.to_csv('ADTV_TSLA.csv', index=False)
+
+def to_json(file_csv):
+    with open(f'{file_csv}', 'r', encoding='utf-8') as f:
+        lettore = list(csv.reader(f, delimiter=','))
+        chiavi = lettore[0]
+        json_da_esportare = []
+        for riga in lettore[1:]:
+            dizionario = {}
+            for i in range(len(chiavi)):
+                chiave = chiavi[i]
+                valore = riga[i]
+                dizionario[chiave] = valore
+            json_da_esportare.append(dizionario)
+            return json_da_esportare

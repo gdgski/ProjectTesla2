@@ -22,5 +22,3 @@ def calculate_mfm(df, high_col="High", low_col="Low", close_col="Close"):
 # Example usage
 df_mfm["MFM"] = calculate_mfm(df_mfm)
 result = (df_mfm[["Date", "MFM"]])
-print(result)
-result.to_csv('MFM.csv', index=False)
