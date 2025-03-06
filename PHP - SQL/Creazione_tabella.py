@@ -33,12 +33,22 @@ def create_tables():
                     ADTV_50 FLOAT(10), 
                     ADTV_50_std FLOAT(10)
                 );
-            CREATE TABLE IF NOT EXISTS dati_iniziali ( date DATE PRIMARY KEY NOT NULL, open DOUBLE, high DOUBLE, low DOUBLE, close DOUBLE, adj_close DOUBLE, volume DOUBLE, UNIQUE KEY (date) -- Mantiene l'unicità della data senza usarla come PRIMARY KEY );
 
+            """
+            sql2 = """ CREATE TABLE IF NOT EXISTS dati_iniziali (
+                date DATE PRIMARY KEY NOT NULL, 
+                open DOUBLE, 
+                high DOUBLE, 
+                low DOUBLE, 
+                close DOUBLE, 
+                adj_close DOUBLE, 
+                volume DOUBLE,
+                UNIQUE KEY (date));
             """
 
             # Esecuzione della query
             cursor.execute(sql)
+            cursor.execute(sql2)
 
             cursor.close()
             print("Creazione tabelle avvenuta!")

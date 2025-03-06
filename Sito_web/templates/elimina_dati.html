@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inserisci Dati Finanziari</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Julius+Sans+One&family=Press+Start+2P&family=Staatliches&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('https://c4.wallpaperflare.com/wallpaper/772/767/583/texture-leather-wallpaper-preview.jpg');
+            color: white;
+            font-family: 'Staatliches', sans-serif;
+        }
+        h1 {
+            font-size: 50px;
+            color: #ff003c;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-container {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 800px;
+            margin: auto;
+        }
+        .btn-primary {
+            background-color: #ff003c;
+            border-color: #ff003c;
+        }
+        .btn-primary:hover {
+            background-color: #cc002f;
+            border-color: #cc002f;
+        }
+        label {
+            font-size: 20px;
+            color: #ff003c;
+        }
+        input {
+            font-size: 18px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    {% with messaggi = get_flashed_messages() %}
+        {% if messaggi %}
+          <script>
+            alert("{{ messaggi[0] }}");
+          </script>
+        {% endif %}
+      {% endwith %}
+    <div class="container mt-5">
+        <h1>Elimina Dati Finanziari</h1>
+        <div class="form-container">
+            <form action="{{ url_for('elimina_back_dati') }}" method="POST">
+                <div class="mb-3">
+                    <label for="date" class="form-label">Data</label>
+                    <input type="date" class="form-control" id="date" name="date" >
+                </div>
+                <div class="button-container mt-4">
+                    <a href="{{ url_for('index') }}" class="btn btn-primary">Home</a>
+                    <button type="submit" class="btn btn-primary">Elimina Dati</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

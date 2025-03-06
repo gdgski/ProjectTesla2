@@ -8,8 +8,27 @@ import numpy as np
 from sqlalchemy import create_engine
 
 
-
-
+def esegui_query(query):
+    try:
+        # Creazione connessione
+        connection = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database="ProjectTesla"
+        )
+        if connection.is_connected():
+            cursor = connection.cursor()
+            cursor.execute(query)
+            connection.commit()
+            cursor.close()
+            print(f"Query eseguita con successo: {query}")
+    except Error as e:
+        print(f"Errore durante l'esecuzione della query: {e}")
+        return None
+    finally:
+        if connection.is_connected():
+            connection.close()
 def esegui_query_parametrizzata(query, parametri):
     try:
         # Creazione connessione
@@ -118,8 +137,6 @@ def inserisci_nuovi_dati():
 
     flash("Dati inseriti con successo")
 
-
-
     return redirect(url_for("inserisci_dati"))
 
 
@@ -145,28 +162,6 @@ def graficiinterattivi():
 
 @app.route("/formattazione_dati")
 def formattazione_dati():
-
-    def esegui_query(query):
-        try:
-            # Creazione connessione
-            connection = mysql.connector.connect(
-                host="localhost",
-                user="root",
-                password="",
-                database="ProjectTesla"
-            )
-            if connection.is_connected():
-                cursor = connection.cursor()
-                cursor.execute(query)
-                connection.commit()
-                cursor.close()
-                print(f"Query eseguita con successo: {query}")
-        except Error as e:
-            print(f"Errore durante l'esecuzione della query: {e}")
-            return None
-        finally:
-            if connection.is_connected():
-                connection.close()
 
 
     def create_dataframe_from_db():
@@ -207,7 +202,7 @@ def formattazione_dati():
         dataframe[f'ADTV_{days}'] = dataframe[column].rolling(window=days, min_periods=1).mean()
 
         # Fill the first 4 values of ADTV with the original column value
-        dataframe.loc[:4, f'ADTV_{days}'] = dataframe.loc[:4, column]
+        dataframe.loc[:days-1, f'ADTV_{days}'] = dataframe.loc[:days-1, column]
 
         # Convert ADTV to integers
         dataframe[f'ADTV_{days}'] = dataframe[f'ADTV_{days}'].astype(int)
@@ -218,7 +213,7 @@ def formattazione_dati():
         dataframe[f'ADTV_{days}_std'] = dataframe[column].rolling(window=days, min_periods=1).std()
 
         # Fill the first 4 values of ADTV_std with 0
-        dataframe.loc[:4, f'ADTV_{days}_std'] = dataframe.loc[:4, column]
+        dataframe.loc[:days-1, f'ADTV_{days}_std'] = dataframe.loc[:days-1, column]
 
         # Convert ADTV_std to integers
         dataframe[f'ADTV_{days}_std'] = dataframe[f'ADTV_{days}_std'].astype(int)
@@ -274,6 +269,23 @@ def formattazione_dati():
 
 
     return redirect(url_for("visualizza_dati"))
+
+@app.route("/elimina_dati")
+def elimina_dati():
+    return render_template("elimina_dati.html")
+
+@app.route("/elimina_back_dati",methods=['POST'])
+def elimina_back_dati():
+
+    date = request.form.get('date')
+    q = f"""DELETE FROM dati_iniziali WHERE date = '{date}'"""
+    q2 = f"""DELETE FROM dati WHERE date = '{date}'"""
+
+    esegui_query(q)
+    esegui_query(q2)
+
+    flash("Dati eliminati con successo")
+    return redirect(url_for("elimina_dati"))
 
 
 
