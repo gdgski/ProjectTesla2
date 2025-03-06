@@ -101,14 +101,13 @@ def inserisci_nuovi_dati():
     cursor = connection.cursor(dictionary=True)
 
     q = """INSERT INTO dati (date,open,high,low,close,adj_close,volume) Values (%s,%s,%s,%s,%s,%s,%s)"""
-
-    esegui_query_parametrizzata(q,date,open,high,low,close,adj_close,volume)
+    valori = (date,open,high,low,close,adj_close,volume)
+    esegui_query_parametrizzata(q,valori)
     
-    cursor.execute(q)
-    risultato = cursor.fetchall()
+
     cursor.close()
     connection.close()
-    return render_template("visualizza_dati.html", lista_tesla=risultato)
+
     flash("Dati inseriti con successo")
 
 
