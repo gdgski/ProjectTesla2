@@ -336,20 +336,41 @@ def modifica_dati_back():
     return redirect(url_for("modifica_dati"))
 
 
-
-# Percorso della cartella dove si trova il file CSV
-DOWNLOAD_FOLDER = os.path.join(os.getcwd(),"static")
+# Define the directory where the CSV file will be saved
+DOWNLOAD_FOLDER = os.path.join(os.getcwd(), "static")
 app.config["DOWNLOAD_FOLDER"] = DOWNLOAD_FOLDER
-
-
 
 @app.route("/download")
 def download_file():
-    filename = "data.csv"  # Nome del file da scaricare
-    return send_from_directory(app.config['DOWNLOAD_FOLDER'], filename, as_attachment=True)
+    # Connect to the database
+    connection = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="",
+        database="ProjectTesla"
+    )
+    cursor = connection.cursor(dictionary=True)
 
+    # Query to fetch data
+    query = """SELECT * FROM dati"""
+    cursor.execute(query)
+    data = cursor.fetchall()
 
+    cursor.close()
+    connection.close()
 
+    # Convert data to a Pandas DataFrame
+    df = pd.DataFrame(data)
+
+    # Define the full file path inside the static folder
+    filename = "data.csv"
+    file_path = os.path.join(app.config["DOWNLOAD_FOLDER"], filename)
+
+    # Save DataFrame to CSV inside the static folder
+    df.to_csv(file_path, index=False, encoding="utf-8")
+
+    # Send the file to the user
+    return send_from_directory(app.config["DOWNLOAD_FOLDER"], filename, as_attachment=True)
 
 
 if __name__ == "__main__":

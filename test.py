@@ -134,6 +134,10 @@ def formattazione_dati():
 
     print("Dati inseriti con successo nel database!")
 
-
-
-formattazione_dati()
+def download_file():
+    def recupera_dati_completi(query):
+    # filename = "data.csv"  # Nome del file da scaricare
+        query = """SELECT * FROM dati"""
+        dati = recupera_dati_completi(query)
+        print(dati)
+    # return send_from_directory(app.config['DOWNLOAD_FOLDER'], filename, as_attachment=True)
