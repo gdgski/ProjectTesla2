@@ -1,4 +1,4 @@
-from flask import Flask, render_template, send_file , request, flash, redirect, url_for
+from flask import Flask, render_template, send_file , request, flash, redirect, url_for, send_from_directory
 import mysql
 from joblib.parallel import method
 from mysql.connector import Error
@@ -6,6 +6,8 @@ import pymysql
 import pandas as pd
 import numpy as np
 from sqlalchemy import create_engine
+import csv
+import os
 
 
 def esegui_query(query):
@@ -286,6 +288,67 @@ def elimina_back_dati():
 
     flash("Dati eliminati con successo")
     return redirect(url_for("elimina_dati"))
+
+@app.route("/modifica_dati")
+def modifica_dati():
+    return render_template("modifica_dati.html")
+
+@app.route("/modifica_dati_back",methods=['POST'])
+def modifica_dati_back():
+
+    date = request.form.get('date')
+    high = request.form.get('high')
+    open = request.form.get('open')
+    volume = request.form.get('volume')
+    adj_close = request.form.get('adj_close')
+    close = request.form.get('close')
+    low = request.form.get('low')
+
+    if open != "":
+
+        q = f"""UPDATE dati SET open = '{open}' WHERE date = '{date}'"""
+        esegui_query(q)
+
+    if high != "":
+        q = f"""UPDATE dati SET high = '{high}' WHERE date = '{date}'"""
+        esegui_query(q)
+
+    if volume != "":
+        q = f"""UPDATE dati SET volume = '{volume}' WHERE date = '{date}'"""
+        esegui_query(q)
+
+    if adj_close != "":
+        q = f"""UPDATE dati SET adj_close = '{adj_close}' WHERE date = '{date}'"""
+        esegui_query(q)
+
+    if close != "":
+        q = f"""UPDATE dati SET close = '{close}' WHERE date = '{date}'"""
+        esegui_query(q)
+
+    if low != "":
+        q = f"""UPDATE dati SET low = '{low}' WHERE date = '{date}'"""
+        esegui_query(q)
+
+
+
+
+    flash("Dati modifica con successo")
+    return redirect(url_for("modifica_dati"))
+
+
+
+# Percorso della cartella dove si trova il file CSV
+DOWNLOAD_FOLDER = os.path.join(os.getcwd(),"static")
+app.config["DOWNLOAD_FOLDER"] = DOWNLOAD_FOLDER
+
+
+
+@app.route("/download")
+def download_file():
+    filename = "data.csv"  # Nome del file da scaricare
+    return send_from_directory(app.config['DOWNLOAD_FOLDER'], filename, as_attachment=True)
+
+
 
 
 
