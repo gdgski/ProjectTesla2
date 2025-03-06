@@ -94,6 +94,9 @@
         <div class="reset-container">
             <button class="btn btn-primary" onclick="resetTable()">Reset</button>
         </div>
+        <div class="reset-container">
+            <a href="{{ url_for('formattazione_dati') }}" class="btn btn-primary">Aggiorna Dati Inseriti</a>
+        </div>
         {% if lista_tesla %}
             <div class="card mt-4">
                 <div class="card-header">
@@ -171,6 +174,7 @@
         function resetTable() {
             location.reload();
         }
+
     </script>
 </body>
 </html>
