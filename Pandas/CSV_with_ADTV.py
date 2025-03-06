@@ -1,4 +1,3 @@
-from CSV_cleaning import create_dataframe
 def ADTV_DAYS(dataframe, column, days):
     # Check if the column exists
     # Calculate the moving average
@@ -22,6 +21,31 @@ def ADTV_DAYS_std(dataframe, column, days):
         dataframe[f'ADTV_{days}_std'] = dataframe[f'ADTV_{days}_std'].astype(int)
 
         return dataframe
+
+def create_dataframe(file_csv):
+# Create a dictionary to then create a dataframe
+    with open(f"{file_csv}","r", encoding='utf-8') as f:
+        lettore = csv.reader(f, delimiter=',')
+        f.readline()
+        price_data = []
+        for riga in lettore:
+            price_data.append(riga)
+    # Creation of the dataframe
+    dataframe_prices = pd.DataFrame(price_data, columns=["Date","Open","High","Low","Close","Adj Close","Volume"])
+    dataframe_prices.replace("", np.nan, inplace=True)
+    #changing the type of datas
+    dataframe_prices['Date'] = pd.to_datetime(dataframe_prices['Date'])
+    dataframe_prices['Open'] = dataframe_prices['Open'].astype(float)
+    dataframe_prices['Close'] = dataframe_prices['Close'].astype(float)
+    dataframe_prices['Low'] = dataframe_prices['Low'].astype(float)
+    dataframe_prices['High'] = dataframe_prices['High'].astype(float)
+    dataframe_prices['Adj Close'] = dataframe_prices['Adj Close'].astype(float)
+    dataframe_prices['Volume'] = dataframe_prices['Volume'].astype(float)
+    df_cleaned = dataframe_prices.dropna().reset_index(drop=True)
+    # Salvo il DataFrame 'df_cleaned' su un csv chiamato 'updated_data.csv'
+    df_cleaned.to_csv(path_or_buf ="updated_data.csv", index = False)
+    return(df_cleaned)
+
 final_file = create_dataframe("TSLA_modified.csv")
 # Elaborate the ADTV over a period time of 5 days
 final_file['ADTV'] = final_file['Volume'].rolling(window=5, min_periods=1).mean()
@@ -43,7 +67,7 @@ result = ADTV_DAYS_std(result, "Volume", 20)
 result = ADTV_DAYS(final_file, "Volume", 50)
 result = ADTV_DAYS_std(result, "Volume", 50)
 result_finale = (final_file[["Date","Open","High","Low","Close","Adj Close","Volume","ADTV_2","ADTV_2_std","ADTV_5","ADTV_5_std","ADTV_10","ADTV_10_std","ADTV_20","ADTV_20_std","ADTV_50","ADTV_50_std"]])
-print(result_finale)
+
 # Save the DataFrame in a CSV file
 result_finale.to_csv('ADTV_TSLA.csv', index=False)
 
