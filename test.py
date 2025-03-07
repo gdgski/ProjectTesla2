@@ -141,3 +141,30 @@ def download_file():
         dati = recupera_dati_completi(query)
         print(dati)
     # return send_from_directory(app.config['DOWNLOAD_FOLDER'], filename, as_attachment=True)
+
+def esegui_query(query):
+    try:
+        # Creazione connessione
+        connection = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database="ProjectTesla"
+        )
+        if connection.is_connected():
+            cursor = connection.cursor()
+            cursor.execute(query)
+            connection.commit()
+            cursor.close()
+            print(f"Query eseguita con successo: {query}")
+    except Error as e:
+        print(f"Errore durante l'esecuzione della query: {e}")
+        return None
+    finally:
+        if connection.is_connected():
+            connection.close()
+
+
+
+
+
