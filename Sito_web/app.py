@@ -1,4 +1,4 @@
-from flask import Flask, render_template, send_file , request, flash, redirect, url_for, send_from_directory
+from flask import Flask, render_template, send_file , request, flash,jsonify, redirect, url_for, send_from_directory
 import mysql
 from joblib.parallel import method
 from mysql.connector import Error
@@ -363,6 +363,37 @@ def download_file():
 
     # Send the file to the user
     return send_from_directory(app.config["DOWNLOAD_FOLDER"], filename, as_attachment=True)
+
+@app.route('/get_data')
+def get_data():
+    start_date = request.args.get('start_date', '')
+    end_date = request.args.get('end_date', '')
+
+    connection = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="",
+        database="ProjectTesla"
+    )
+    cursor = connection.cursor(dictionary=True)
+
+    # Query to fetch data
+    query = """SELECT * FROM dati"""
+    cursor.execute(query)
+    data = cursor.fetchall()
+
+    cursor.close()
+    connection.close()
+
+    # Convert data to a Pandas DataFrame
+    df = pd.DataFrame(data)
+    df['date'] = pd.to_datetime(df['date'])
+
+    filtered_df = df
+    if start_date and end_date:
+        filtered_df = filtered_df[(filtered_df['date'] >= start_date) & (filtered_df['date'] <= end_date)]
+
+    return jsonify(filtered_df.to_dict(orient="records"))
 
 if __name__ == "__main__":
     app.run(debug=True)
