@@ -9,7 +9,6 @@ from sqlalchemy import create_engine
 import csv
 import os
 
-
 def esegui_query(query):
     try:
         # Creazione connessione
@@ -53,7 +52,6 @@ def esegui_query_parametrizzata(query, parametri):
         if connection.is_connected():
             connection.close()
 
-
 # Webapp creation
 
 app = Flask(__name__)
@@ -80,7 +78,6 @@ def visualizza_dati():
     cursor.close()
     connection.close()
     return render_template("visualizza_dati.html",lista_tesla = risultato)
-
 
 @app.route("/modelli")
 def modelli():
@@ -141,7 +138,6 @@ def inserisci_nuovi_dati():
 
     return redirect(url_for("inserisci_dati"))
 
-
 @app.route("/graficiinterattivi")
 def graficiinterattivi():
     connection = mysql.connector.connect(
@@ -159,8 +155,6 @@ def graficiinterattivi():
     cursor.close()
     connection.close()
     return render_template("graficiinterattivi.html", lista_tesla=risultato)
-
-
 
 @app.route("/formattazione_dati")
 def formattazione_dati():
@@ -341,8 +335,8 @@ def modifica_dati_back():
     flash("Dati modifica con successo")
     return redirect(url_for("modifica_dati"))
 
-
 # Define the directory where the CSV file will be saved
+
 DOWNLOAD_FOLDER = os.path.join(os.getcwd(), "static")
 app.config["DOWNLOAD_FOLDER"] = DOWNLOAD_FOLDER
 
@@ -377,7 +371,6 @@ def download_file():
 
     # Send the file to the user
     return send_from_directory(app.config["DOWNLOAD_FOLDER"], filename, as_attachment=True)
-
 
 if __name__ == "__main__":
     app.run(debug=True)
