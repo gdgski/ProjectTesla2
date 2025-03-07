@@ -80,9 +80,17 @@
     <label for="endDate" class="form-label">Data Fine:</label>
     <input type="date" id="endDate" class="form-control">
 </div>
+        <div class="d-flex justify-content-between">
+    <div>
         <button id="applyFilter" class="btn btn-primary mb-3">Filtra</button>
         <button id="resetFilters" class="btn btn-secondary mb-3">Azzera Filtri</button>
         <button id="resetZoom" class="btn btn-primary mb-3">Reset Zoom</button>
+    </div>
+    <div class="ms-auto d-flex align-items-center">
+        <button id="newButton" class="btn btn-warning mb-3 me-2">Calcolo Rendimento</button>
+        <span id="rendimentoText" class="text-white fw-bold"></span>
+    </div>
+</div>
         <div class="chart-container">
             <canvas id="financialChart"></canvas>
         </div>
@@ -92,6 +100,30 @@
     </div>
 
     <script>
+      document.getElementById('newButton').addEventListener('click', () => {
+    const startDate = document.getElementById('startDate').value;
+    const endDate = document.getElementById('endDate').value;
+
+    if (!startDate || !endDate) {
+        alert("Seleziona entrambe le date per calcolare il rendimento.");
+        return;
+    }
+
+    fetch(`/calcola_rendimento?start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}`, {
+        method: 'POST'
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            alert(data.error);
+        } else {
+            document.getElementById('rendimentoText').innerText = `Il rendimento in questo periodo è ${data.rendimento}%`;
+        }
+    })
+    .catch(error => console.error('Errore nel calcolo del rendimento:', error));
+});
+
+
         document.getElementById('resetFilters').addEventListener('click', () => {
     console.log("Reset filtri cliccato"); // Debug
 

@@ -395,5 +395,45 @@ def get_data():
 
     return jsonify(filtered_df.to_dict(orient="records"))
 
+
+@app.route('/calcola_rendimento',methods=['POST'])
+def calcola_rendimento():
+    # Ottieni le date dai parametri della richiesta
+    start_date = request.args.get('start_date')
+    end_date = request.args.get('end_date')
+
+    connection = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="",
+        database="ProjectTesla"
+    )
+    cursor = connection.cursor(dictionary=True)
+
+    # Query per ottenere il prezzo di apertura
+    cursor.execute("SELECT open FROM dati WHERE date = %s", (start_date,))
+    open_price = cursor.fetchone()
+
+    # Query per ottenere il prezzo di chiusura
+    cursor.execute("SELECT close FROM dati WHERE date = %s", (end_date,))
+    close_price = cursor.fetchone()
+
+
+    cursor.close()
+    connection.close()
+
+    # Controllo se i dati esistono
+    if not open_price or not close_price:
+        return jsonify({"error": "Dati non trovati per le date fornite"}), 404
+
+    # Calcolo del rendimento
+
+    rendimento = ((close_price['close'] - open_price['open']) / open_price['open']) * 100
+
+
+    return jsonify({"rendimento": round(rendimento, 2)})
+
+
+
 if __name__ == "__main__":
     app.run(debug=True)
