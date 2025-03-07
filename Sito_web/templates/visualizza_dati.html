@@ -109,7 +109,7 @@
                     <table class="table table-dark" id="dataTable">
                         <thead class="table-header-custom">
                             <tr>
-                                {% for col in ['Date', 'Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume', 'ADTV 2', 'ADTV 2 Std', 'ADTV 5', 'ADTV 5 Std', 'ADTV 10', 'ADTV 10 Std', 'ADTV 20', 'ADTV 20 Std', 'ADTV 50', 'ADTV 50 Std'] %}
+                                {% for col in ['Date', 'Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume', 'ADTV 2', 'ADTV 2 Std', 'ADTV 5', 'ADTV 5 Std', 'ADTV 10', 'ADTV 10 Std', 'ADTV 20', 'ADTV 20 Std', 'ADTV 50', 'ADTV 50 Std', 'MFM' , 'CMF'] %}
                                     <th onclick="sortTable({{ loop.index0 }}, this)">
                                         {{ col }} <span class="sort-indicator"></span>
                                     </th>
@@ -136,6 +136,8 @@
                                     <td>{{ dato.ADTV_20_std or '-' }}</td>
                                     <td>{{ dato.ADTV_50 or '-' }}</td>
                                     <td>{{ dato.ADTV_50_std or '-' }}</td>
+                                    <td>{{ dato.MFM or '-' }}</td>
+                                    <td>{{ dato.CMF or '-' }}</td>
                                 </tr>
                             {% endfor %}
                         </tbody>

@@ -222,7 +222,7 @@ def formattazione_dati():
 
         return dataframe
 
-    def calculate_mfm(df, high_col="High", low_col="Low", close_col="Close"):
+    def calculate_mfm(df, high_col="high", low_col="low", close_col="close"):
         return ((df[close_col] - df[low_col]) - (df[high_col] - df[close_col])) / (df[high_col] - df[low_col])
 
     final_file = create_dataframe_from_db()
@@ -235,8 +235,8 @@ def formattazione_dati():
     final_file['ADTV_std'].iloc[:4] = 0
     final_file['ADTV_std'] = final_file['ADTV_std'].astype(int)
     final_file['MFM'] = calculate_mfm(final_file)
-    final_file["MFV"] = final_file['MFM'] * final_file["Volume"]
-    final_file["CMF"] = final_file["MFV"].rolling(21).sum() / final_file["Volume"].rolling(21).sum()
+    final_file["MFV"] = final_file['MFM'] * final_file["volume"]
+    final_file["CMF"] = final_file["MFV"].rolling(21).sum() / final_file["volume"].rolling(21).sum()
     df = (final_file[["date", "volume"]])
     result = ADTV_DAYS(final_file, "volume", 2)
     result = ADTV_DAYS_std(result, "volume", 2)
