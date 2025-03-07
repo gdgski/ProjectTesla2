@@ -66,8 +66,6 @@ final_file['ADTV_std'] = final_file['ADTV_std'].astype(int)
 final_file['MFM'] = calculate_mfm(final_file)
 final_file["MFV"] = final_file['MFM'] * final_file["Volume"]
 final_file["CMF"] = final_file["MFV"].rolling(21).sum() / final_file["Volume"].rolling(21).sum()
-
-
 df = (final_file[["Date","Volume"]])
 result = ADTV_DAYS(final_file, "Volume", 2)
 result = ADTV_DAYS_std(result, "Volume", 2)
@@ -79,8 +77,9 @@ result = ADTV_DAYS(final_file, "Volume", 20)
 result = ADTV_DAYS_std(result, "Volume", 20)
 result = ADTV_DAYS(final_file, "Volume", 50)
 result = ADTV_DAYS_std(result, "Volume", 50)
-result_finale = (final_file[["Date","Open","High","Low","Close","Adj Close","Volume","ADTV_2","ADTV_2_std","ADTV_5","ADTV_5_std","ADTV_10","ADTV_10_std","ADTV_20","ADTV_20_std","ADTV_50","ADTV_50_std", "MFM", "CMF"]])
-
+result_finale = (final_file[["Date","Open","High","Low","Close","Adj Close","Volume","ADTV_2","ADTV_2_std",
+                             "ADTV_5","ADTV_5_std","ADTV_10","ADTV_10_std","ADTV_20","ADTV_20_std","ADTV_50",
+                             "ADTV_50_std", "MFM", "CMF"]])
 # Save the DataFrame in a CSV file
 result_finale.to_csv('ADTV_TSLA.csv', index=False)
 
