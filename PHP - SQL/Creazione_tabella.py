@@ -31,7 +31,9 @@ def create_tables():
                     ADTV_20 FLOAT(10), 
                     ADTV_20_std FLOAT(10), 
                     ADTV_50 FLOAT(10), 
-                    ADTV_50_std FLOAT(10)
+                    ADTV_50_std FLOAT(10), 
+                    MFM FLOAT(30), 
+                    CMF FLOAT(30)
                 );
 
             """

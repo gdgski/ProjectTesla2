@@ -1,3 +1,7 @@
+import pandas as pd
+import numpy as np
+import csv
+
 def ADTV_DAYS(dataframe, column, days):
     # Check if the column exists
     # Calculate the moving average
@@ -46,6 +50,10 @@ def create_dataframe(file_csv):
     df_cleaned.to_csv(path_or_buf ="updated_data.csv", index = False)
     return(df_cleaned)
 
+
+def calculate_mfm(df, high_col="High", low_col="Low", close_col="Close"):
+    return ((df[close_col] - df[low_col]) - (df[high_col] - df[close_col])) / (df[high_col] - df[low_col])
+
 final_file = create_dataframe("TSLA_modified.csv")
 # Elaborate the ADTV over a period time of 5 days
 final_file['ADTV'] = final_file['Volume'].rolling(window=5, min_periods=1).mean()
@@ -55,6 +63,11 @@ final_file['ADTV'] = final_file['ADTV'].astype(int)
 final_file['ADTV_std'] = final_file['ADTV'].rolling(window=5, min_periods=1).std()
 final_file['ADTV_std'].iloc[:4] = 0
 final_file['ADTV_std'] = final_file['ADTV_std'].astype(int)
+final_file['MFM'] = calculate_mfm(final_file)
+final_file["MFV"] = final_file['MFM'] * final_file["Volume"]
+final_file["CMF"] = final_file["MFV"].rolling(21).sum() / final_file["Volume"].rolling(21).sum()
+
+
 df = (final_file[["Date","Volume"]])
 result = ADTV_DAYS(final_file, "Volume", 2)
 result = ADTV_DAYS_std(result, "Volume", 2)
@@ -66,7 +79,7 @@ result = ADTV_DAYS(final_file, "Volume", 20)
 result = ADTV_DAYS_std(result, "Volume", 20)
 result = ADTV_DAYS(final_file, "Volume", 50)
 result = ADTV_DAYS_std(result, "Volume", 50)
-result_finale = (final_file[["Date","Open","High","Low","Close","Adj Close","Volume","ADTV_2","ADTV_2_std","ADTV_5","ADTV_5_std","ADTV_10","ADTV_10_std","ADTV_20","ADTV_20_std","ADTV_50","ADTV_50_std"]])
+result_finale = (final_file[["Date","Open","High","Low","Close","Adj Close","Volume","ADTV_2","ADTV_2_std","ADTV_5","ADTV_5_std","ADTV_10","ADTV_10_std","ADTV_20","ADTV_20_std","ADTV_50","ADTV_50_std", "MFM", "CMF"]])
 
 # Save the DataFrame in a CSV file
 result_finale.to_csv('ADTV_TSLA.csv', index=False)

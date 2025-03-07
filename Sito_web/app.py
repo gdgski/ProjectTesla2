@@ -222,6 +222,9 @@ def formattazione_dati():
 
         return dataframe
 
+    def calculate_mfm(df, high_col="High", low_col="Low", close_col="Close"):
+        return ((df[close_col] - df[low_col]) - (df[high_col] - df[close_col])) / (df[high_col] - df[low_col])
+
     final_file = create_dataframe_from_db()
     # Elaborate the ADTV over a period time of 5 days
     final_file['ADTV'] = final_file['volume'].rolling(window=5, min_periods=1).mean()
@@ -231,6 +234,9 @@ def formattazione_dati():
     final_file['ADTV_std'] = final_file['ADTV'].rolling(window=5, min_periods=1).std()
     final_file['ADTV_std'].iloc[:4] = 0
     final_file['ADTV_std'] = final_file['ADTV_std'].astype(int)
+    final_file['MFM'] = calculate_mfm(final_file)
+    final_file["MFV"] = final_file['MFM'] * final_file["Volume"]
+    final_file["CMF"] = final_file["MFV"].rolling(21).sum() / final_file["Volume"].rolling(21).sum()
     df = (final_file[["date", "volume"]])
     result = ADTV_DAYS(final_file, "volume", 2)
     result = ADTV_DAYS_std(result, "volume", 2)
@@ -244,7 +250,7 @@ def formattazione_dati():
     result = ADTV_DAYS_std(result, "volume", 50)
     result_finale = (final_file[
         ["date", "open", "high", "low", "close", "adj_close", "volume", "ADTV_2", "ADTV_2_std", "ADTV_5", "ADTV_5_std",
-         "ADTV_10", "ADTV_10_std", "ADTV_20", "ADTV_20_std", "ADTV_50", "ADTV_50_std"]])
+         "ADTV_10", "ADTV_10_std", "ADTV_20", "ADTV_20_std", "ADTV_50", "ADTV_50_std", "MFM", "CMF"]])
 
 
     # Query per estrarre i dati
